@@ -11,17 +11,16 @@ def app_root() -> Path:
 
 
 def project_root() -> Path:
-    """Racine du projet console (``Input/``, ``tutor_lms/``, ``app/``, ``db/``)."""
+    """Racine du projet console (``Input/``, ``app/``, ``db/``)."""
     return app_root().parent
 
 
 def tutor_lms_export_root_default() -> Path:
     """
-    Dossier projet pour l’export Tutor LMS décompressé (doit contenir ``courses/``).
-    Convention : ``<racine projet>/tutor_lms``. Seule source de l'import Tutor dans
-    la console Streamlit (Admin) ; pas de chemin personnalisable dans l'UI.
+    Dossier de référence pour l’export Tutor LMS décompressé (doit contenir ``courses/``).
+    Convention Promind7 : ``<03-Streamlit>/04-tutorLMS``.
     """
-    return project_root() / "tutor_lms"
+    return project_root().parent / "04-tutorLMS"
 
 
 def content_root() -> Path:

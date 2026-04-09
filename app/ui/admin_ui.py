@@ -2,7 +2,7 @@
 Composant UI pour l'onglet Admin.
 
 Affiche des informations techniques (taille de base), l'import Tutor LMS
-depuis ``tutor_lms/``, l'historique d'import, ainsi que les membres et apprenants.
+depuis ``03-Streamlit/04-tutorLMS``, l'historique d'import, ainsi que les membres et apprenants.
 """
 
 import streamlit as st
@@ -88,7 +88,7 @@ def render_admin_tab():
 
         # NOTE ProMind7 :
         # La section "Import V3 – API Tutor LMS (Beta)" a été désactivée.
-        # L'import apprenants se fait uniquement via l'export décompressé (dossier tutor_lms/).
+        # L'import apprenants se fait uniquement via l'export décompressé (dossier 04-tutorLMS/).
         # Le code d'intégration API reste présent dans integrations/ et services/
         # pour d'éventuelles évolutions futures (V3.1).
 
@@ -108,27 +108,27 @@ def render_admin_tab():
 
 def _render_import_zip():
     st.subheader("Imports Tutor LMS")
-    with st.expander("Importer depuis tutor_lms/ (projet)", expanded=False):
+    with st.expander("Importer depuis 04-tutorLMS/ (03-Streamlit)", expanded=False):
         export_root_path = tutor_lms_export_root_default().resolve()
         export_root = str(export_root_path)
         st.markdown(
-            f"**Source unique :** export Tutor décompressé dans **`tutor_lms/`** "
-            f"à la racine du dépôt (dossier `courses/` requis)."
+            f"**Source unique :** export Tutor décompressé dans **`03-Streamlit/04-tutorLMS/`** "
+            f"(dossier `courses/` requis)."
         )
         st.code(export_root, language=None)
         if not export_root_path.is_dir():
             st.warning(
-                f"Ce dossier est absent : créez `tutor_lms/` à la racine du projet "
+                f"Ce dossier est absent : créez `03-Streamlit/04-tutorLMS/` "
                 f"et y placez l’export, puis relancez l’import."
             )
         st.caption(
-            "Après import : miroir cours + inscriptions alignés sur `tutor_lms/` ; "
+            "Après import : miroir cours + inscriptions alignés sur `04-tutorLMS/` ; "
             "les apprenants affichés sont reconstruits depuis `tutor_enrollments` (plus besoin de supprimer la base à la main). "
             "Les cours absents du dossier sont retirés du miroir SQLite."
         )
         if st.button("Lancer l'import", key="admin_tutor_import_btn"):
             if not export_root_path.is_dir():
-                st.error("Le dossier tutor_lms/ est introuvable ou n’est pas un répertoire.")
+                st.error("Le dossier 04-tutorLMS/ est introuvable ou n’est pas un répertoire.")
                 return
 
             conn = None

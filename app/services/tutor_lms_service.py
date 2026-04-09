@@ -120,6 +120,13 @@ def import_tutor_zip_folder(export_root: str, conn=None, *, log_result: bool = T
     création des dossiers de contenu.
     """
     zip_path = Path(export_root)
+    courses_dir = zip_path / "courses"
+    if not courses_dir.is_dir():
+        raise FileNotFoundError(
+            f"Dossier 'courses' introuvable dans {zip_path}. "
+            "Placez l'export Tutor LMS décompressé dans 03-Streamlit/04-tutorLMS/ "
+            "(avec 04-tutorLMS/courses/...)."
+        )
     zip_name = zip_path.name
     zip_size = _compute_path_size(zip_path)
 
