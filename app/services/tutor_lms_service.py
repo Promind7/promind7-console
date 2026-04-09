@@ -124,8 +124,8 @@ def import_tutor_zip_folder(export_root: str, conn=None, *, log_result: bool = T
     if not courses_dir.is_dir():
         raise FileNotFoundError(
             f"Dossier 'courses' introuvable dans {zip_path}. "
-            "Placez l'export Tutor LMS décompressé dans 03-Streamlit/04-tutorLMS/ "
-            "(avec 04-tutorLMS/courses/...)."
+            "Placez l'export Tutor LMS décompressé dans le dossier source détecté "
+            "(PROMIND7_TUTOR_LMS_ROOT, 04-tutorLMS ou tutor_lms) avec un sous-dossier courses/."
         )
     zip_name = zip_path.name
     zip_size = _compute_path_size(zip_path)

@@ -1,0 +1,194 @@
+{
+    "schema_version": "2.0.0",
+    "exported_at": "March 23, 2026 9:36 pm",
+    "keep_media_files": false,
+    "keep_user_data": true,
+    "data": [
+        {
+            "content_type": "courses",
+            "data": {
+                "enrollments": [
+                    {
+                        "enrollment": {
+                            "ID": "29638",
+                            "post_author": "106",
+                            "post_date": "2026-03-23 21:35:27",
+                            "post_date_gmt": "2026-03-23 21:35:27",
+                            "post_content": "",
+                            "post_title": "Cours inscrits &ndash; March 23, 2026 @ 9:35 pm",
+                            "post_excerpt": "",
+                            "post_status": "completed",
+                            "comment_status": "closed",
+                            "ping_status": "closed",
+                            "post_password": "",
+                            "post_name": "cours-inscrits-march-23-2026-935-pm",
+                            "to_ping": "",
+                            "pinged": "",
+                            "post_modified": "2026-03-23 21:35:27",
+                            "post_modified_gmt": "2026-03-23 21:35:27",
+                            "post_content_filtered": "",
+                            "post_parent": "29622",
+                            "guid": "https:\/\/promind7.com\/?post_type=tutor_enrolled&p=29638",
+                            "menu_order": "0",
+                            "post_type": "tutor_enrolled",
+                            "post_mime_type": "",
+                            "comment_count": "0"
+                        },
+                        "enrollment_meta": [],
+                        "student": {
+                            "data": {
+                                "ID": "106",
+                                "user_login": "zaki",
+                                "user_pass": "$wp$2y$10$go7mVlFZvhcSDEGYmfA\/zuezstR5eP8iMF9bZhJKb6EMock7sWWiG",
+                                "user_nicename": "zaki",
+                                "user_email": "abderrazzaq.elyazidi@gmail.com",
+                                "user_url": "",
+                                "user_registered": "2025-11-03 14:13:06",
+                                "user_activation_key": "",
+                                "user_status": "0",
+                                "display_name": "Abderrazzaq YAZIDI"
+                            },
+                            "ID": 106,
+                            "caps": {
+                                "subscriber": true
+                            },
+                            "cap_key": "wp_capabilities",
+                            "roles": [
+                                "subscriber"
+                            ],
+                            "allcaps": {
+                                "read": true,
+                                "level_0": true,
+                                "view_others_h5p_contents": true,
+                                "view_h5p_contents": true,
+                                "view_h5p_results": true,
+                                "subscriber": true
+                            },
+                            "filter": null
+                        },
+                        "student_meta": {
+                            "nickname": [
+                                "zaki"
+                            ],
+                            "first_name": [
+                                "Abderrazzaq"
+                            ],
+                            "last_name": [
+                                "YAZIDI"
+                            ],
+                            "description": [
+                                ""
+                            ],
+                            "rich_editing": [
+                                "true"
+                            ],
+                            "syntax_highlighting": [
+                                "true"
+                            ],
+                            "comment_shortcuts": [
+                                "false"
+                            ],
+                            "admin_color": [
+                                "fresh"
+                            ],
+                            "use_ssl": [
+                                "0"
+                            ],
+                            "show_admin_bar_front": [
+                                "true"
+                            ],
+                            "locale": [
+                                ""
+                            ],
+                            "wp_capabilities": [
+                                {
+                                    "subscriber": true
+                                }
+                            ],
+                            "wp_user_level": [
+                                "0"
+                            ],
+                            "dismissed_wp_pointers": [
+                                ""
+                            ],
+                            "omni_send_core_last_sync": [
+                                "ERROR"
+                            ],
+                            "synced_gravatar_hashed_id": [
+                                "7235211ec933d3a36b20c6f4be5ddef3"
+                            ],
+                            "um_member_directory_data": [
+                                {
+                                    "account_status": "approved",
+                                    "hide_in_members": false,
+                                    "profile_photo": false,
+                                    "cover_photo": false,
+                                    "verified": false
+                                }
+                            ],
+                            "tutor_require_email_verification": [
+                                "verified"
+                            ],
+                            "session_tokens": [
+                                {
+                                    "a73f2dd24d8b9de87d512d9decd72aaea7507129baf4a2b24efeb097a8010804": {
+                                        "expiration": 1762352023,
+                                        "ip": "41.92.99.12",
+                                        "ua": "Mozilla\/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit\/605.1.15 (KHTML, like Gecko) Version\/26.0.1 Mobile\/15E148 Safari\/604.1",
+                                        "login": 1762179223
+                                    },
+                                    "84eb705c2ebae45f7365f1b884b69c8274d667e04d1884bed375fcaca34a928a": {
+                                        "expiration": 1762352035,
+                                        "ip": "41.92.99.201",
+                                        "ua": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/141.0.0.0 Safari\/537.36",
+                                        "login": 1762179235
+                                    }
+                                }
+                            ],
+                            "st_last_login": [
+                                "1762179235"
+                            ],
+                            "tutor_last_login": [
+                                "1762179235"
+                            ],
+                            "_um_last_login": [
+                                "2025-11-03 14:13:55"
+                            ],
+                            "wp_persisted_preferences": [
+                                {
+                                    "core\/edit-post": {
+                                        "welcomeGuide": "",
+                                        "isComplementaryAreaVisible": 1,
+                                        "inactivePanels": [
+                                            "meta-box-aioseo-settings"
+                                        ]
+                                    },
+                                    "core\/edit-site": {
+                                        "welcomeGuide": "",
+                                        "isComplementaryAreaVisible": 1
+                                    },
+                                    "_modified": "2025-11-03T14:13:46+00:00"
+                                }
+                            ],
+                            "hostinger_meta-box-aioseo-settings_changed": [
+                                "1"
+                            ],
+                            "_tutor_timezone": [
+                                "Africa\/Casablanca"
+                            ],
+                            "account_status": [
+                                "approved"
+                            ],
+                            "um_user_profile_url_slug_user_login": [
+                                "zaki"
+                            ],
+                            "_is_tutor_student": [
+                                "1774301727"
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}

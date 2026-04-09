@@ -15,12 +15,32 @@ def project_root() -> Path:
     return app_root().parent
 
 
+def _tutor_export_has_courses(d: Path) -> bool:
+    return (d / "courses").is_dir()
+
+
 def tutor_lms_export_root_default() -> Path:
     """
     Dossier de référence pour l’export Tutor LMS décompressé (doit contenir ``courses/``).
-    Convention Promind7 : ``<03-Streamlit>/04-tutorLMS``.
+
+    Ordre de résolution :
+    1) variable d'environnement ``PROMIND7_TUTOR_LMS_ROOT`` ;
+    2) ``<03-Streamlit>/04-tutorLMS`` si présent **et** contient ``courses/`` (dépôt local) ;
+    3) ``<racine projet>/tutor_lms`` (copie versionnée pour le cloud — même contenu).
     """
-    return project_root().parent / "04-tutorLMS"
+    env = os.getenv("PROMIND7_TUTOR_LMS_ROOT", "").strip()
+    if env:
+        return Path(env)
+
+    sibling_legacy = project_root().parent / "04-tutorLMS"
+    bundled = project_root() / "tutor_lms"
+    if sibling_legacy.is_dir() and _tutor_export_has_courses(sibling_legacy):
+        return sibling_legacy
+    if bundled.is_dir() and _tutor_export_has_courses(bundled):
+        return bundled
+    if sibling_legacy.is_dir():
+        return sibling_legacy
+    return bundled
 
 
 def content_root() -> Path:
