@@ -1,0 +1,188 @@
+1. Structure générale de l’export Tutor LMS (ZIP)
+
+Dans le ZIP tutor-lms-data-YYYY-MM-DD…zip :
+
+settings.json
+
+courses/
+
+un dossier par cours, par ex. :
+
+courses/29140/29140.json → description complète du cours
+
+courses/29140/enrollments.json → inscriptions
+
+courses/29140/progress.json → progression / quiz / assignments
+
+courses/29140/orders.json → commandes / paiements
+
+courses/29140/reviews.json → avis
+
+Structure commune des fichiers JSON :
+
+{
+  "schema_version": "2.0.0",
+  "exported_at": "...",
+  "keep_media_files": true,
+  "keep_user_data": true,
+  "data": [
+    {
+      "content_type": "courses" | "enrollments" | "progress" | "orders" | "reviews",
+      "data": { ... }
+    }
+  ]
+}
+
+
+Pour un cours :
+content_type = "courses" et les infos sont dans :
+data[0].data.course
+
+2. Structure d’un cours (Pack ProMind7)
+
+Dans courses/29141/29141.json par exemple :
+
+course_json = <contenu du fichier>
+course = course_json["data"][0]["data"]["course"]
+
+
+Champs importants observés :
+
+course["ID"] → identifiant du cours (ex : 29141)
+
+course["post_title"] → titre du pack (ex : "Pack 4 – Maîtrise de soi")
+
+course["post_name"] → slug (ex : "pack-3-self-mastery")
+
+course["post_status"] → "publish", "draft", etc.
+
+course["post_date"] → date de création
+
+course["post_modified"] → date de modification
+
+course["taxonomies"] → dictionnaire avec catégories, tags, etc.
+
+course["contents"] → liste de modules / sections (voir point 3)
+
+💡 Décision ProMind7 :
+Un cours Tutor LMS = un Pack ProMind7 (Pack 0, Pack 4 – Self Mastery, Pack 5B – Génie Civil, etc.)
+
+3. Structure des modules & leçons (contents / children)
+
+course["contents"] est une liste de modules (sections, chapitres) :
+
+module = course["contents"][0]
+module["ID"]          # identifiant du module (ex : 29274)
+module["post_title"]  # titre du module (ex : "Module 1 – Spécialisation : Génie Civil…")
+module["post_name"]   # slug du module
+module["post_status"] # statut
+module["menu_order"]  # ordre dans le cours
+module["children"]    # liste de leçons dans ce module
+
+
+Chaque élément de module["children"] est une leçon :
+
+lesson = module["children"][0]
+lesson["ID"]          # identifiant de la leçon
+lesson["post_title"]  # titre de la leçon
+lesson["post_name"]   # slug de la leçon
+lesson["post_status"] # statut
+lesson["menu_order"]  # ordre dans le module
+lesson["meta"]        # dictionnaire : type, durée, etc.
+
+
+🧠 Hiérarchie finale :
+
+Cours (Pack)
+➜ Modules (Sections / Chapitres)
+➜ Leçons (contenus, vidéos, quiz…)
+
+C’est exactement la hiérarchie ProMind7 (Pack → Modules → Leçons).
+
+4. Structure des autres fichiers (enrollments, progress, etc.)
+
+Pour un cours donné, dans courses/ID/ :
+
+enrollments.json :
+json["data"][0]["data"]["enrollments"] → liste des inscriptions à ce cours
+
+progress.json :
+json["data"][0]["data"]["progress"] → dict :
+
+quiz_attempts_and_answers
+
+course_completion
+
+submitted_assignments
+
+grade_book_results
+
+Au moment de l’analyse, ces listes sont souvent vides chez toi (peu d’apprenants encore) mais la structure existe.
+
+5. Schéma proposé pour la base locale (miroir Tutor LMS)
+a) Table tutor_courses (miroir des cours / packs Tutor)
+Champ	Type	Source Tutor
+id (PK SQLite)	INTEGER	autoincr
+tutor_id	INTEGER	course["ID"]
+title	TEXT	course["post_title"]
+slug	TEXT	course["post_name"]
+status	TEXT	course["post_status"]
+created_at	TEXT	course["post_date"]
+updated_at	TEXT	course["post_modified"]
+categories_json	TEXT	json.dumps(course["taxonomies"]["categories"]) (si présent)
+tags_json	TEXT	json.dumps(course["taxonomies"]["tags"]) (si présent)
+raw_json	TEXT	JSON complet du cours (sécurité + debug)
+b) Table tutor_modules (sections / chapitres du cours)
+Champ	Type	Source
+id (PK SQLite)	INTEGER	autoincr
+tutor_id	INTEGER	module["ID"]
+course_tutor_id	INTEGER	course["ID"]
+title	TEXT	module["post_title"]
+slug	TEXT	module["post_name"]
+status	TEXT	module["post_status"]
+order_index	INTEGER	module["menu_order"]
+raw_json	TEXT	JSON complet du module
+c) Table tutor_lessons (leçons / contenus)
+Champ	Type	Source
+id (PK SQLite)	INTEGER	autoincr
+tutor_id	INTEGER	lesson["ID"]
+course_tutor_id	INTEGER	course["ID"]
+module_tutor_id	INTEGER	module["ID"]
+title	TEXT	lesson["post_title"]
+slug	TEXT	lesson["post_name"]
+status	TEXT	lesson["post_status"]
+order_index	INTEGER	lesson["menu_order"]
+meta_json	TEXT	json.dumps(lesson["meta"])
+raw_json	TEXT	JSON complet de la leçon
+d) (Plus tard) tutor_enrollments, tutor_progress (optionnel)
+
+tutor_enrollments → suivre qui est inscrit où
+
+tutor_progress → suivre quiz, complétions, notes
+
+Non indispensable pour la V1 “agent de structuration de contenu”.
+
+6. Logique d’import à partir du ZIP (V1 sécurisée)
+
+Pour remplir la base locale à partir du ZIP, la logique est :
+
+Pour chaque dossier courses/<COURSE_ID>/ :
+
+Ouvrir <COURSE_ID>.json
+
+Lire course = json["data"][0]["data"]["course"]
+
+Upsert dans tutor_courses avec les champs ci-dessus.
+
+Pour chaque module dans course["contents"] :
+
+Upsert dans tutor_modules
+
+Pour chaque lesson dans module["children"] :
+
+Upsert dans tutor_lessons
+
+Les fichiers enrollments.json, progress.json, etc. peuvent être ignorés dans un premier temps ou stockés dans des tables supplémentaires pour le reporting.
+
+✅ Ce mémo résume exactement l’analyse du ZIP et le design du miroir local que l’on a conçu.
+Tu peux le sauvegarder tel quel, et le jour où tu me le renvoies, je saurai exactement de quoi on parle.
