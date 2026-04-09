@@ -260,6 +260,10 @@ def get_pack_root(pack_folder_name: str) -> Path:
         alt = os.getenv("PROMIND7_STAGE_EMPLOI_SCRIPT_ROOT", "").strip()
         if alt:
             return Path(alt)
+        # Priorité au contenu versionné dans le repo (Input/Script) quand il existe.
+        local_pack = get_script_library_root() / pack_folder_name
+        if local_pack.is_dir():
+            return local_pack
         layout = _stage_emploi_pack_from_consulting_layout()
         if layout is not None:
             return layout
